@@ -133,6 +133,16 @@ Our first POC shows, what the last table row does not on contain on all pages th
 For the page https://onepiece-tube.com/episoden-streams the last table row on that site has the value `001 Das Abenteuer beginnt 52 22.07.1997 Episode 4`.  
 This is a problem that we will tackle in the next commit.
 
+We are now tackling down the problem, that some sources do not have the newest item as the last table row. There are multiple ways to solve this problem:
+
+1. We could use different xpath expressions per page. We could update One Piece to use `//*[@class="sagatable"][1]//tr[2]` instead of `//*[@class="sagatable"][last()]//tr[last()]`.  
+Note, that we use `[1]...[2]`. This translates to the first sagatable and it's second row, because the first row is the header.  
+2. We could stop using xpath expressions to find the latest chapters / episodes. Instead we could return all table rows with the driver function `find_elements_by_xpath`. Afterwards, we could analyse all the returned rows using Python.
+3. The following is just an idea without proof if this can work. Maybe I'll try this one day.  
+Since the episode number is always in the first column, we could use xpath functions to identify the max value of the first `<td></td>`in each row and return this row.  
+
+For the ease of useage, we go with the approach 1.)
+
 [analysis_1]: ./img/analysis_1.png "HTML source code for sagatable with Chrome Inspect"
 [analysis_2]: ./img/analysis_2.png "HTML source code for mediaitem with Chrome Inspect"
 [analysis_3]: ./img/analysis_3.png "HTML source code for iFrame with Chrome Inspect"
