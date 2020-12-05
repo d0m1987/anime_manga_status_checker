@@ -108,6 +108,31 @@ Now it's time to start building a proof of concept. The first step is easy. Our 
 1. Start selenium
 2. Get the data from the test table
 
+The pages for Dragonball run without problems **but** One Piece has a data protection notice overlay. This one is a bit tricky, because we cannot directly select and click the "Accept and close" button. It is hidden within an iFrame. See the following screenshot
+
+![alt text][analysis_3]
+
+To solve this problem, we switch to the iFrame, push the button and switch back. This is done with the following code:
+
+```python
+iframe = driver.find_element_by_xpath('//*[contains(@id,"sp_message_iframe")]')
+driver.switch_to.frame(iframe)
+driver.find_element_by_xpath('//button[@title="Accept and close"]').click()
+driver.switch_to.default_content()
+```
+
+Remarks to this code snippet:
+1. I use `//*[contains(@id,"sp_message_iframe")]`because I cannot be sure if the id of the iFrame is static. `sp_message_iframe_376736` looks to me, like it could be cached and change any time. Since there is no other element on the page with the id containing `sp_message_iframe` I assume this to be a robust way to select the iFrame.
+2. I use `//button[@title="Accept and close"]` because I find it easy to read and understand what I'm selecting.  
+
+Since we are just preparing a proof of concept (POC), we implement the closing of the data protection notice overlay in an easy way. If the element scraped via the xpath has no text value (assumption here: data protection notification is blocking), we try to close it.
+
+Now the code is running and reading data from the websites. I added a time delay of five seconds between page updates since I do not want to harm the websites by creating too many requests.
+
+Our first POC shows, what the last table row does not on contain on all pages the most recent chapter / episode information.  
+For the page https://onepiece-tube.com/episoden-streams the last table row on that site has the value `001 Das Abenteuer beginnt 52 22.07.1997 Episode 4`.  
+This is a problem that we will tackle in the next commit.
 
 [analysis_1]: ./img/analysis_1.png "HTML source code for sagatable with Chrome Inspect"
 [analysis_2]: ./img/analysis_2.png "HTML source code for mediaitem with Chrome Inspect"
+[analysis_3]: ./img/analysis_3.png "HTML source code for iFrame with Chrome Inspect"
