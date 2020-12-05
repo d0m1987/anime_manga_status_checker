@@ -4,6 +4,8 @@
 This should document my thoughts and development of the scraper module for people that would like to learn scraping.
 
 ## Steps
+1. [Analyse the pages you would like to scrape](#analyse-the-pages-you-would-like-to-scrape)
+2. [Build a proof of concept](#build-a-proof-of-concept)
 
 ### Analyse the pages you would like to scrape
 The basic idea was to scrape the following pages for updates:
