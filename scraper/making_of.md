@@ -145,6 +145,71 @@ Since the episode number is always in the first column, we could use xpath funct
 
 For the ease of useage, we go with the approach 1.)
 
+Now it's time to grab all the data we are looking for. Namely, this is
+- Number of the episode
+- Name of the episode
+- Direct link to the episode
+
+By inspecting the HTML structure of all the test sites, we can see that the episode number and episode name are always the first two `<td></td>` elements in the `<tr></tr>` element.
+
+![alt text][analysis_4]
+
+So our first step is to grab the episode number and name off the element we identified via xpath. The code for that is as follows:
+
+```Python
+element_tds = element.find_elements_by_tag_name("td")
+episode_number = element_tds[0].text
+episode_name = element_tds[1].text
+```
+
+Grabbing the direct link to the episode is a bit harder. As you can see in the screenshot below, the link to the episode is built via the attribute "onclick". 
+
+![alt text][analysis_5]
+
+With the `get_attribute` function of Selenium we can get the value for onclick. Using the library "parse", we can extract the needed information in an easy readable way. We could do the same with a regular expression, but in my opinion this would make the code less readable and is not necessary at this point.
+
+```Python
+onclick = element.get_attribute("onclick")
+href_onclick = parse("window.location.href = '{}'", onclick)[0]
+```
+
+The git repository for the library "parse" can be found [here](https://github.com/r1chardj0n3s/parse)
+
+Giving this code another run over our pages shows, that (again...) the manga site for One Piece has another structure. While all other pages have their "onclick" attribute in the `<tr></tr>`, this site has it in the `<td></td>` that holds the episode name.
+
+This problem is solved with the following small adaption to our code that gets the "onclick" attribute value.
+
+```Python
+onclick = element.get_attribute("onclick") or element.find_element_by_xpath("//td[@onclick]").get_attribute("onclick")
+href_onclick = parse("window.location.href = '{}'", onclick)[0] 
+```
+
+The `or` operator in Python returns as soon as any value resolves to true. The function `get_attribute` returns `None` if the element doesn't have the searched attribute.  
+So the code first tries the more frequent case first and then, if that yields no results, he tries to find a `<td></td>` element with the "onclick" attribute.  
+I could have coded it in a more direct way, i.e. directly access the second `<td></td>`, but chose otherwise because so the code might be more flexible.  
+
+The last step before we have gathered all information needed is to get the first part of the url. As you can see we need to get the value of `window.location.href`. This can easily be done executing custom javascript code in Selenium.
+
+```Python
+href_window = driver.execute_script("return window.location.href")
+```
+
+Important here is to note the "return" statement. A common mistake I make is to forget the return and wondering afterwards, why the code executes without errors but doesn't return a value. Be warned about this error ;-)
+
+Feel free to first try it in the console. I did so too. This helps to identify bugs easier, since you don't have another layer (Selenium) between you and the HTML source.
+
+![alt text][analysis_6]
+
+If you now run the POC, you see exactly the output we wish for:
+
+![alt text][analysis_7]
+
+Great! So at this point, we can get all the data we need. Now it's time to wrap this knowledge in good code!
+
 [analysis_1]: ./img/analysis_1.png "HTML source code for sagatable with Chrome Inspect"
 [analysis_2]: ./img/analysis_2.png "HTML source code for mediaitem with Chrome Inspect"
 [analysis_3]: ./img/analysis_3.png "HTML source code for iFrame with Chrome Inspect"
+[analysis_4]: ./img/analysis_4.png "HTML source code for table row and table data with Chrome Inspect"
+[analysis_5]: ./img/analysis_5.png "HTML source code for attribute 'onclick' from table data element with Chrome Inspect"
+[analysis_6]: ./img/analysis_6.png "Browser console execution of window.location.href"
+[analysis_7]: ./img/analysis_7.png "Console results of the scraping"

@@ -3,6 +3,8 @@ import time
 from selenium import webdriver
 from selenium.common.exceptions import NoSuchElementException
 
+from parse import *
+
 #############################################
 #   Data structure for the pages to visit   #
 #############################################
@@ -49,6 +51,13 @@ for page in pages_to_scrape:
         driver.find_element_by_xpath('//button[@title="Accept and close"]').click()
         driver.switch_to.default_content()
         element = driver.find_element_by_xpath(page.xpath)
-    print(element.text)
+    element_tds = element.find_elements_by_tag_name("td")
+    episode_number = element_tds[0].text
+    episode_name = element_tds[1].text
+    onclick = element.get_attribute("onclick") or element.find_element_by_xpath("//td[@onclick]").get_attribute("onclick")
+    href_onclick = parse("window.location.href = '{}'", onclick)[0]
+    href_window = driver.execute_script("return window.location.href")
+    episode_href = f"{href_window}{href_onclick}"
+    print(f"[{episode_number}] {episode_name} -> {episode_href}")
 
 driver.close()
