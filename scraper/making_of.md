@@ -206,6 +206,25 @@ If you now run the POC, you see exactly the output we wish for:
 
 Great! So at this point, we can get all the data we need. Now it's time to wrap this knowledge in good code!
 
+### Refactoring the proof of concept
+
+My plan was to deploy the scraper in a first version to my Raspberry Pi and then to a Virtual Private Server (VPS). In both cases I'd like to use Docker for deployment.  
+Here I noticed, that I will run into problems, since my Raspberry Pi runs on an ARM chipset and my VPS runs on an Intel Xeon processor.  
+
+The possibilities I had here were:  
+- Address the problem by using adapted docker images for Selenium. Neither of the images I've seen so far are from a trusted source, so I might even need to build it myself if I'd like to trust it 100%. 
+- Rethink about my code. Do I really need Selenium? Can I maybe reduce the dependencies by going back to pure HTML? Does this maybe even have more benefits?
+
+I chose the latter approach. Why did I do that? There are a lot of benefits:  
+
+- Use requests instead of Selenium. This helps in reducing the overhead. There is no dependency based on a working chromedriver or similar anymore.  
+Furthermore, we do not need to worry about cookie consents that we need to click like before. They are based on Javascript and this is not run when using the requests library to get only the HTML source.
+- Make the program more robust. Since we are using only python libraries that are independent of the chip architecture, we are only dependent on the Python runtime environment. And this exists on Raspbian as well as on Ubuntu (my server OS).
+
+The (very small) problem that we cannot use the xpath parser from Selenium anymore when dropping it can easily be solved by using lxml as libray for parsing / working with HTML.
+
+The general idea in the new file [requests_lxml_poc](scraper/requests_lxml_poc.py) is exactly as before. We are now just using pure html instead of loading the whole homepage.
+
 [analysis_1]: ./img/analysis_1.png "HTML source code for sagatable with Chrome Inspect"
 [analysis_2]: ./img/analysis_2.png "HTML source code for mediaitem with Chrome Inspect"
 [analysis_3]: ./img/analysis_3.png "HTML source code for iFrame with Chrome Inspect"
