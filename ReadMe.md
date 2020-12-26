@@ -1,7 +1,7 @@
 # HTML update checker
 
 # Index
-[Development of the scraper](./scraper/making_of.md)
+[Analysis of my favorite anime pages html structure](./docs/analysis/analysis_anime_pages.md)
 
 ## Goal
 The goal of this repository is to provide a website that gives you the ability to define XPATH values and be notified when they change.

@@ -1,4 +1,4 @@
-# Making of the scraper
+# Analysis of my favorite anime pages html structure
 
 ## Goal
 This should document my thoughts and development of the scraper module for people that would like to learn scraping.
@@ -223,7 +223,7 @@ Furthermore, we do not need to worry about cookie consents that we need to click
 
 The (very small) problem that we cannot use the xpath parser from Selenium anymore when dropping it can easily be solved by using lxml as libray for parsing / working with HTML.
 
-The general idea in the new file [requests_lxml_poc](requests_lxml_poc.py) is exactly as before. We are now just using pure html instead of loading the whole homepage.
+The general idea in the new file [poc_requests_lxml.py](poc_requests_lxml.py) is exactly as before. We are now just using pure html instead of loading the whole homepage.
 
 [analysis_1]: ./img/analysis_1.png "HTML source code for sagatable with Chrome Inspect"
 [analysis_2]: ./img/analysis_2.png "HTML source code for mediaitem with Chrome Inspect"
