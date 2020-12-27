@@ -1,14 +1,9 @@
 from abc import abstractmethod
-from typing import List, Union, TYPE_CHECKING
-
-from html_update_checker.episode import EpisodeParser, Episode
-if TYPE_CHECKING:
-    from html_update_checker.user import User
 
 class Homepage:
     homepages = dict()
 
-    def __init__(self, url, episodes_parser: EpisodeParser, name=None):
+    def __init__(self, url, episodes_parser: "EpisodeParser", name=None):
         self.name = name or url
         self.url = url
         self.users_to_notify = dict()
@@ -33,5 +28,5 @@ class Homepage:
 
 class HomepageUpdateInterface:
     @abstractmethod
-    def add_update_notification(homepage: Homepage, episode: Episode) -> None:
+    def add_update_notification(homepage: "Homepage", episode: "Episode") -> None:
         pass 

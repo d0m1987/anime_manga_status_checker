@@ -1,4 +1,4 @@
-from typing import Union, List, TYPE_CHECKING
+from typing import Union, List
 from collections import defaultdict
 
 from html_update_checker.homepage import HomepageUpdateInterface

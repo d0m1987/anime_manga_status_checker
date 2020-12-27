@@ -1,8 +1,5 @@
 from abc import ABC, abstractmethod
-from typing import TYPE_CHECKING, List
-
-if TYPE_CHECKING:
-    from html_update_checker.homepage import Homepage
+from typing import List
 
 class Episode:
     def __init__(self, name:str, url:str, episode_number:int):
@@ -22,5 +19,5 @@ class EpisodeParser(ABC):
         EpisodeParser.episode_parsers[cls.__name__] = cls
     
     @abstractmethod
-    def parse_to_list_of_episodes(self, homepage:"Homepage") -> List[Episode]:
+    def parse_to_list_of_episodes(self, homepage:"Homepage") -> List["Episode"]:
         pass
