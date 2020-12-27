@@ -1,7 +1,7 @@
 # HTML update checker
 
 # Index
-[Analysis of my favorite anime pages html structure](./docs/analysis/analysis_anime_pages.md)
+[Analysis of my favorite anime pages html structure](./docs/analysis/analysis_anime_pages.md)  
 [Development process explained](./docs/development/development_process.md)
 
 ## Goal
