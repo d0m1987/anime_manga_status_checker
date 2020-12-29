@@ -7,6 +7,12 @@ class Episode:
         self.url = url
         self.episode_number = episode_number
     
+    def __str__(self):
+        return f"[{self.episode_number}] {self.name} (Link: {self.url})"
+    
+    def __repr__(self):
+        return f"[{self.episode_number}] {self.name} (Link: {self.url})"
+
     def __gt__(self, other:"Episode") -> bool:
         return self.episode_number > other.episode_number
 
