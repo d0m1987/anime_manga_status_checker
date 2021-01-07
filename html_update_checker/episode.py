@@ -7,16 +7,16 @@ class Episode:
         self.url = url
         self.episode_number = episode_number
     
-    def __str__(self):
+    def __str__(self) -> str:
         return f"[{self.episode_number}] {self.name} (Link: {self.url})"
     
-    def __repr__(self):
+    def __repr__(self) -> str:
         return f"[{self.episode_number}] {self.name} (Link: {self.url})"
 
     def __gt__(self, other:"Episode") -> bool:
         return self.episode_number > other.episode_number
 
-    def __eq__(self, other):
+    def __eq__(self, other) -> bool:
         if not isinstance(other, Episode):
             return False
         if (self.name == other.name) and (self.url == other.url) and (self.episode_number == other.episode_number):

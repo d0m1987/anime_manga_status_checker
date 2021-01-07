@@ -10,14 +10,14 @@ class User(HomepageUpdateInterface):
         self.homepages = dict()
         self.pending_update_notifications = defaultdict(list)
     
-    def add_homepage_notifications(self, homepage:Union["Homepage", List["Homepage"]]):
+    def add_homepage_notifications(self, homepage:Union["Homepage", List["Homepage"]]) -> None:
         if isinstance(homepage, Iterable):
             for hp in homepage:
                 self.add_homepage_notifications(hp)
         else:
             self.homepages[homepage.url] = homepage 
 
-    def remove_homepage_notifications(self, homepage:Union["Homepage", List["Homepage"]]):
+    def remove_homepage_notifications(self, homepage:Union["Homepage", List["Homepage"]]) -> None:
         if isinstance(homepage, Iterable):
             for hp in homepage:
                 self.remove_homepage_notifications(hp)
@@ -40,11 +40,11 @@ class User(HomepageUpdateInterface):
     def __send_mail(self, html_body:str) -> None:
         pass
 
-    def __remove_update_notifications(self):
+    def __remove_update_notifications(self) -> None:
         for key in self.pending_update_notifications.keys:
             self.pending_update_notifications[key] = []
 
-    def send_updates(self):
+    def send_updates(self) -> None:
         # Create HTML updatemail body
         html_body = self.__create_mail_body()
         # Send mail
@@ -52,7 +52,7 @@ class User(HomepageUpdateInterface):
         # Remove update notifications after successfull sendout
         self.__remove_update_notifications()
 
-    def add_update_notification(self, homepage:"Homepage", episode:Union["Episode", List["Episode"]]):
+    def add_update_notification(self, homepage:"Homepage", episode:Union["Episode", List["Episode"]]) -> None:
         if isinstance(episode, Iterable):
             for ep in episode:
                 self.add_update_notification(ep)
