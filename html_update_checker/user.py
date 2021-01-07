@@ -15,7 +15,8 @@ class User(HomepageUpdateInterface):
             for hp in homepage:
                 self.add_homepage_notifications(hp)
         else:
-            self.homepages[homepage.url] = homepage 
+            self.homepages[homepage.url] = homepage
+            homepage.register_for_updates(self) 
 
     def remove_homepage_notifications(self, homepage:Union["Homepage", List["Homepage"]]) -> None:
         if isinstance(homepage, Iterable):
@@ -32,17 +33,16 @@ class User(HomepageUpdateInterface):
             if not episode_list: continue
             html_body += f"<p><h2>{homepage_url}</h2>"
             for episode in episode_list:
-                html_body += f'[{episode.number}] <a href="{episode.url}">{episode.name}</a><br/>'
+                html_body += f'[{episode.episode_number}] <a href="{episode.url}">{episode.name}</a><br/>'
             html_body += "</p>"
         
         return html_body
 
     def __send_mail(self, html_body:str) -> None:
-        pass
+        print(html_body)
 
     def __remove_update_notifications(self) -> None:
-        for key in self.pending_update_notifications.keys:
-            self.pending_update_notifications[key] = []
+        self.pending_update_notifications = defaultdict(list)
 
     def send_updates(self) -> None:
         # Create HTML updatemail body
@@ -57,7 +57,7 @@ class User(HomepageUpdateInterface):
             for ep in episode:
                 self.add_update_notification(ep)
         else:
-            self.pending_update_notifications[homepage.url] = episode
+            self.pending_update_notifications[homepage.url].append(episode)
         
 
 
