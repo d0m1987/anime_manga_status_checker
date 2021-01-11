@@ -2,6 +2,7 @@ import pickle
 import base64
 from functools import partial
 from email.mime.text import MIMEText
+from decouple import config
 
 from googleapiclient.discovery import build
 
@@ -60,4 +61,4 @@ def get_service(path):
     service = build('gmail', 'v1', credentials=creds)
     return service
 
-send_message = partial(send_message, get_service(r"token.pickle"), "me")
+send_message = partial(send_message, get_service(config("PICKLED_TOKEN_PATH")), "me")

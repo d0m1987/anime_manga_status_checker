@@ -1,5 +1,6 @@
 import time
 import schedule
+from decouple import config
 from html_update_checker.user import User
 from html_update_checker.homepage import Homepage
 from html_update_checker.episode_parser_implementations.dragonball_super_anime import DragonballSuperAnimeEpisodeParser
@@ -7,7 +8,7 @@ from html_update_checker.episode_parser_implementations.dragonball_super_anime i
 #################################
 #   Create users to be notified #
 #################################
-user = User("dominic.buehler@gmx.de")
+user = User(config("USER_EMAIL"))
 
 #########################
 #   Create homepages    #
