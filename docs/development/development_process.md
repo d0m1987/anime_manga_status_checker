@@ -78,9 +78,17 @@ Programming techniques:
 
 Libraries:
 - requests (for HTTP requests)
-- gspread (to communicate with Google Sheets)
 - funcy (provides a great retry decorator)
 
+## Getting the setup up and running
 
+To get the setup up and running (and to have spare time for new projects), I'm going to reduce the project to the minimum such that it works.
+
+I have a lot of other ideas, e.g.
+- Split the codebase into 1) Crawler and 2) User with update functionalities
+- Prepare the code to be split into microservices, such that I can e.g. spin up additional services if there are a lot of pages to scrape.
+- Generalize the code more, e.g. a dictionary with attributes instead of the concrete `name`, `url` and `episode_number`.
+
+But thinking about the time I would need to implement all of that (and having in mind that I do not have a MVP yet), I'll go and get it up running on my Raspberry Pi asap.
 
 [uml_diagram]: ./img/uml.png "UML diagram for the program"
