@@ -3,6 +3,7 @@ from collections import defaultdict
 from collections.abc import Iterable
 
 from html_update_checker.homepage import HomepageUpdateInterface
+from html_update_checker import gmail
 
 class User(HomepageUpdateInterface):
     def __init__(self, email:str):
@@ -39,7 +40,7 @@ class User(HomepageUpdateInterface):
         return html_body
 
     def __send_mail(self, html_body:str) -> None:
-        print(html_body)
+        gmail.send_message(html_body)
 
     def __remove_update_notifications(self) -> None:
         self.pending_update_notifications = defaultdict(list)
