@@ -1,2 +1,2 @@
-from .dragonball_super_anime import DragonballSuperAnimeEpisodeParser
-from .one_piece_anime import OnePieceAnimeEpisodeParser
+from .mediaitem import MediaitemEpisodeParser
+from .sagatable import SagatableEpisodeParser

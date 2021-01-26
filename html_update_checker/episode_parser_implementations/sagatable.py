@@ -7,7 +7,7 @@ import funcy
 from html_update_checker.episode import (
     EpisodeParser,
     Episode)
-class DragonballSuperAnimeEpisodeParser(EpisodeParser):
+class SagatableEpisodeParser(EpisodeParser):
     def parse_to_list_of_episodes(self, homepage:"Homepage") -> List["Episode"]:
         # Get HTML code of requested site
         html_code = self.__get_html_code(homepage.url)
@@ -21,18 +21,20 @@ class DragonballSuperAnimeEpisodeParser(EpisodeParser):
         return response.text
     
     def __parse_episodes(self, html_code:str, url:str) -> List["Episode"]:
-        XPATH_MEDIAITEM_EPISODE_ROW = '//tr[@class="mediaitem"]'
+        XPATH_SAGATABLE_EPISODE_ROW = '//*[@class="sagatable"][1]//tr'
         XPATH_EPISODE_NUMBER = './td[1]/text()'
         XPATH_EPISODE_TITLE = './td[2]/text()'
         
         episodes = []
         tree = html.fromstring(html_code)
-        media_items = tree.xpath(f'{XPATH_MEDIAITEM_EPISODE_ROW}')
-
-        for media_item in media_items:
-            episode_number = media_item.xpath(f'{XPATH_EPISODE_NUMBER}')[0]
-            episode_title = media_item.xpath(f'{XPATH_EPISODE_TITLE}')[0]
-            episode_onclick = media_item.attrib["onclick"]
+        sagatable_items = tree.xpath(f'{XPATH_SAGATABLE_EPISODE_ROW}')
+        # Remove header with "Nr. | <Name of arc> | Seiten | Release"
+        sagatable_items = sagatable_items[1:]
+        
+        for sagatable_item in sagatable_items:
+            episode_number = sagatable_item.xpath(f'{XPATH_EPISODE_NUMBER}')[0]
+            episode_title = sagatable_item.xpath(f'{XPATH_EPISODE_TITLE}')[0]
+            episode_onclick = sagatable_item.xpath('//td[@onclick]')[0].attrib["onclick"]
             episode_path = re.match(r"window.location.href = '(.*)'", episode_onclick).group(1)
             episode_domain = re.match(r"(.*\/\/.*)\/", url).group(1)
             episode_url = episode_domain + episode_path
