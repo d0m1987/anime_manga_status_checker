@@ -35,7 +35,7 @@ def update_episodes_and_notify_users():
         homepage.episodes_update()
     user.send_updates()
 
-schedule.every(1).minute.do(update_episodes_and_notify_users)
+schedule.every(1).hour.do(update_episodes_and_notify_users)
 
 while True:
     try:
