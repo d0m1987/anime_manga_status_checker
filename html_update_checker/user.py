@@ -27,17 +27,20 @@ class User(HomepageUpdateInterface):
             del self.homepages[homepage.url]
     
     def __create_mail_body(self) -> str:
-        html_body = """
-        <h1>Homepage updates</h1>
-        """
+        episode_updates_html = self.__create_episode_updates_html()
+        if episode_updates_html:
+            return f"<h1>Episode updates</h1><br/>{episode_updates_html}"
+
+    def __create_episode_updates_html(self) -> str:
+        episode_updates_html = ""
         for homepage_url, episode_list in self.pending_update_notifications.items():
             if not episode_list: continue
-            html_body += f"<p><h2>{homepage_url}</h2>"
+            episode_updates_html += f"<p><h2>{homepage_url}</h2>"
             for episode in episode_list:
-                html_body += f'[{episode.episode_number}] <a href="{episode.url}">{episode.name}</a><br/>'
-            html_body += "</p>"
+                episode_updates_html += f'[{episode.episode_number}] <a href="{episode.url}">{episode.name}</a><br/>'
+            episode_updates_html += "</p>"
         
-        return html_body
+        return episode_updates_html
 
     def __send_mail(self, html_body:str) -> None:
         gmail.send_message(html_body)
@@ -48,10 +51,11 @@ class User(HomepageUpdateInterface):
     def send_updates(self) -> None:
         # Create HTML updatemail body
         html_body = self.__create_mail_body()
-        # Send mail
-        self.__send_mail(html_body)
-        # Remove update notifications after successfull sendout
-        self.__remove_update_notifications()
+        if html_body:
+            # Send mail
+            self.__send_mail(html_body)
+            # Remove update notifications after successfull sendout
+            self.__remove_update_notifications()
 
     def add_update_notification(self, homepage:"Homepage", episode:Union["Episode", List["Episode"]]) -> None:
         if isinstance(episode, Iterable):
