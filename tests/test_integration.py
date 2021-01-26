@@ -3,9 +3,9 @@ from html_update_checker import (
     User
 )
 
-from html_update_checker.episode_parser_implementations import DragonballSuperAnimeEpisodeParser
+from html_update_checker.episode_parser_implementations import MediaitemEpisodeParser
 
 class TestIntegration:
     def test_integration(self):
         user = User("test@test.com")
-        user.add_homepage_notifications(Homepage("http://dragonball-tube.com/dragonball-super-episoden-streams", DragonballSuperAnimeEpisodeParser, "Dragonball Super Anime"))
+        user.add_homepage_notifications(Homepage("http://dragonball-tube.com/dragonball-super-episoden-streams", MediaitemEpisodeParser, "Dragonball Super Anime"))
