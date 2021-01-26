@@ -91,4 +91,16 @@ I have a lot of other ideas, e.g.
 
 But thinking about the time I would need to implement all of that (and having in mind that I do not have a MVP yet), I'll go and get it up running on my Raspberry Pi asap.
 
+## Generalizing the episode parser implementations
+As we've seen in the [analysis](./docs/analysis/analysis_anime_pages.md#analyse-the-pages-you-would-like-to-scrape), nearly all pages can be parsed using the css class selector "mediaitem". Only for the One Piece Manga, we need to use the css class selector "sagatable". Thus, I reorganized the episode_parser_implementations to only contain these two parsers instead of having a separate parser for each homepage.
+
+## Exception handling
+To see which excdeptions occur during runtime, I wrapped the `schedule.run_pending()` in a try... except block. All exceptions are catched and printed.  
+The plan is to add exception handling iteratively, since this is a hobby project and no other system / person depends on this system running (except for me, waiting for the next episodes :yum:).
+
+## Updating start.py
+I included now all homepages to `start.py`.  
+First tries showed, that the pickled Gmail token somehow expired. So I'm thinking about building `gmail.py` again or even switching to [Sendgrid](https://sendgrid.com/pricing/), since they offer 100 mails / day for free.  
+When this is done, I'll let the program run for a day or so on my working machine. If this runs properly, I'll create a dockerfile and push it to my Raspberry Pi.
+
 [uml_diagram]: ./img/uml.png "UML diagram for the program"
