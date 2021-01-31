@@ -32,12 +32,16 @@ user.add_homepage_notifications([
 #################################################
 #   Regularly fetch episodes and notify users   #
 #################################################
-def update_episodes_and_notify_users():
+def update_episodes():
     for homepage in Homepage.homepages.values():
         homepage.episodes_update()
     user.send_updates()
 
-schedule.every(1).hour.do(update_episodes_and_notify_users)
+def send_update_to_user():
+    user.send_updates()
+
+schedule.every(1).hour.do(update_episodes)
+schedule.every().day.at("08:00").do(send_update_to_user)
 
 while True:
     try:
