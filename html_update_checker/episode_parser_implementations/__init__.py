@@ -1,2 +1,3 @@
 from .mediaitem import MediaitemEpisodeParser
 from .sagatable import SagatableEpisodeParser
+from .readdragonballsuper import ReadDragonballSuperEpisodeParser

@@ -5,6 +5,7 @@ from html_update_checker.user import User
 from html_update_checker.homepage import Homepage
 from html_update_checker.episode_parser_implementations.mediaitem import MediaitemEpisodeParser
 from html_update_checker.episode_parser_implementations.sagatable import SagatableEpisodeParser
+from html_update_checker.episode_parser_implementations.readdragonballsuper import ReadDragonballSuperEpisodeParser
 
 #################################
 #   Create users to be notified #
@@ -25,6 +26,7 @@ user.add_homepage_notifications([
     Homepage("http://fairytail-tube.org/edens-zero-mangaliste", MediaitemEpisodeParser),
     Homepage("http://naruto-tube.org/boruto-episoden-streams", MediaitemEpisodeParser),
     Homepage("http://naruto-tube.org/boruto-kapitel-mangaliste", MediaitemEpisodeParser),
+    Homepage("https://readdragonballsuper.com/", ReadDragonballSuperEpisodeParser),
 ])
 
 #################################################
