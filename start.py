@@ -7,6 +7,12 @@ from html_update_checker.episode_parser_implementations.mediaitem import Mediait
 from html_update_checker.episode_parser_implementations.sagatable import SagatableEpisodeParser
 from html_update_checker.episode_parser_implementations.readdragonballsuper import ReadDragonballSuperEpisodeParser
 
+#############
+#   Logging #
+#############
+import logging
+logging.basicConfig(level=logging.INFO, filename='logging.log')
+
 #################################
 #   Create users to be notified #
 #################################
@@ -35,10 +41,10 @@ user.add_homepage_notifications([
 def update_episodes():
     for homepage in Homepage.homepages.values():
         homepage.episodes_update()
-    user.send_updates()
 
 def send_update_to_user():
     user.send_updates()
+    logging("Successfully sent updates to user")
 
 schedule.every(1).hour.do(update_episodes)
 schedule.every().day.at("08:00").do(send_update_to_user)
@@ -46,7 +52,7 @@ schedule.every().day.at("08:00").do(send_update_to_user)
 while True:
     try:
         schedule.run_pending()
+        logging.info("Ran scheduled functions with schedule.run_pending()")
     except Exception as e:
-        print(e)
-    print("Successfully ran checks")
+        logging.error(e)
     time.sleep(60)

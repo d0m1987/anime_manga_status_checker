@@ -1,6 +1,7 @@
 from typing import Union, List
 from collections import defaultdict
 from collections.abc import Iterable
+import logging
 
 from html_update_checker.homepage import HomepageUpdateInterface
 from html_update_checker import sendgrid
@@ -63,6 +64,8 @@ class User(HomepageUpdateInterface):
                 self.add_update_notification(ep)
         else:
             self.pending_update_notifications[homepage.url].append(episode)
+            logging.info(f"[{self.email}] Added {episode}")
+
         
 
 

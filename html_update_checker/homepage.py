@@ -1,4 +1,5 @@
 from abc import abstractmethod
+import logging
 from typing import List
 class Homepage:
     homepages = dict()
@@ -42,11 +43,16 @@ class Homepage:
         # Update self._episodes with the most recent episodes
         self._episodes = episodes
 
+        # Log update
+        logging.info(f"Successfully updated homepage {self.url}. Found {len(new_episodes)} new episodes.")
+
     def register_for_updates(self, user:"User") -> None:
         self.users_to_notify[user.email] = user
+        logging.info(f"[{user.email}] Registered {self.url}")
     
     def unregister_for_updates(self, user:"User") -> None:
         del self.users_to_notify[user.email]
+        logging.info(f"[{user.email}] Unregistered {self.url}")
 
 
 class HomepageUpdateInterface:

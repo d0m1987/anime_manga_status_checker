@@ -1,5 +1,6 @@
 # using SendGrid's Python Library
 # https://github.com/sendgrid/sendgrid-python
+import logging
 from sendgrid import SendGridAPIClient
 from sendgrid.helpers.mail import Mail
 from decouple import config
@@ -13,8 +14,8 @@ def send_message(html_body:str):
     try:
         sg = SendGridAPIClient(config("SENDGRID_API_KEY"))
         response = sg.send(message)
-        print(response.status_code)
-        print(response.body)
-        print(response.headers)
+        logging.info(response.status_code)
+        logging.info(response.body)
+        logging.info(response.headers)
     except Exception as e:
-        print(e.message)
+        logging.error(e.message)
