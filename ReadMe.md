@@ -31,3 +31,19 @@ Following VS Code configs can be used to run pytest.
     "console": "integratedTerminal"
 }
 ```
+
+## Run at startup with crontab
+
+Open crontab with
+
+```bash
+crontab -e
+```
+
+Append to the crontab the following (adapted to your environment) task 
+
+```bash
+@reboot sleep 120 && /home/pi/scripts/html_update_checker/env/bin/python3 /home/pi/scripts/html_update_checker/start.py
+```
+
+We first wait 120 seconds to complete the startup, connect to the internet, etc.

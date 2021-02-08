@@ -101,6 +101,10 @@ The plan is to add exception handling iteratively, since this is a hobby project
 ## Updating start.py
 I included now all homepages to `start.py`.  
 First tries showed, that the pickled Gmail token somehow expired. So I'm thinking about building `gmail.py` again or even switching to [Sendgrid](https://sendgrid.com/pricing/), since they offer 100 mails / day for free.  
-When this is done, I'll let the program run for a day or so on my working machine. If this runs properly, I'll create a dockerfile and push it to my Raspberry Pi.
+When this is done, I'll let the program run for a day or so on my working machine. If this runs properly, I'll push it to my Raspberry Pi.
+
+## Running the script on my Raspberry Pi
+The script is now running locally on my Raspberry Pi. It's run in an endless loop with the library `schedule` from Dan Bader and started automatically with crontab at startup.  
+The concrete command can be found in the [ReadMe](.ReadMe.md)
 
 [uml_diagram]: ./img/uml.png "UML diagram for the program"
