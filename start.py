@@ -49,7 +49,7 @@ def send_update_to_user():
 schedule.every(1).hours.do(update_episodes)
 schedule.every().day.at("08:00").do(send_update_to_user)
 
-if __name__ == "main":
+if __name__ == "__main__":
     while True:
         try:
             schedule.run_pending()
