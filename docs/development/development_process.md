@@ -105,6 +105,8 @@ When this is done, I'll let the program run for a day or so on my working machin
 
 ## Running the script on my Raspberry Pi
 The script is now running locally on my Raspberry Pi. It's run in an endless loop with the library `schedule` from Dan Bader and started automatically with crontab at startup.  
-The concrete command can be found in the [ReadMe](../../ReadMe.md)
+The concrete command can be found in the [ReadMe](../../ReadMe.md#run-at-startup-with-crontab)  
+
+This marks the end of my journey building this application until now. I hope you enjoyed reading the process and learned something :-)
 
 [uml_diagram]: ./img/uml.png "UML diagram for the program"
