@@ -40,6 +40,18 @@ Following VS Code configs can be used to run pytest.
 }
 ```
 
+Alternatively, the Makefile contains the same configurations via
+
+```bash
+make pytest_to_file
+```
+
+or
+
+```bash
+make pytest_to_console
+```
+
 ## Run at startup with crontab
 
 Open crontab with
