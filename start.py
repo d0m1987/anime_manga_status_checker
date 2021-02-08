@@ -44,15 +44,16 @@ def update_episodes():
 
 def send_update_to_user():
     user.send_updates()
-    logging("Successfully sent updates to user")
+    logging.info("Successfully sent updates to user")
 
-schedule.every(1).hour.do(update_episodes)
+schedule.every(1).hours.do(update_episodes)
 schedule.every().day.at("08:00").do(send_update_to_user)
 
-while True:
-    try:
-        schedule.run_pending()
-        logging.info("Ran scheduled functions with schedule.run_pending()")
-    except Exception as e:
-        logging.error(e)
-    time.sleep(60)
+if __name__ == "main":
+    while True:
+        try:
+            schedule.run_pending()
+            logging.info("Ran scheduled functions with schedule.run_pending()")
+        except Exception as e:
+            logging.error(e)
+        time.sleep(60)

@@ -14,6 +14,10 @@ class Homepage:
 
     def __identify_new_episodes(self, old_episodes:List["Episode"], new_episodes:List["Episode"]) -> List["Episode"]:
         diff_episodes = []
+
+        # Prevents "not iterable" error if no new_episodes exist
+        if not new_episodes: return []
+        
         for episode in new_episodes:
             if episode not in old_episodes:
                 diff_episodes.append(episode)
