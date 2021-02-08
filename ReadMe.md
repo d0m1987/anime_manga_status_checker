@@ -9,6 +9,14 @@ The goal of this repository is to provide a website that gives you the ability t
 The original purpose I started this project was to get notified of new anime / manga episodes I periodically check. Then I realized, that the idea can be made more generically and thus the project was changed to be a wider checker.  
 If you like other mangas / animes / ..., please feel free to suggest further pages or better: directly create a pull request.
 
+## Easy installation via make
+
+Create virtual environment and install requirements.txt
+
+```bash
+make install
+```
+
 ## Run tests
 
 Following VS Code configs can be used to run pytest.
