@@ -21,7 +21,7 @@ make install
 
 Following VS Code configs can be used to run pytest.
 
-```bash
+```json
 {
     "name": "Python: Run tests to console",
     "type": "python",
