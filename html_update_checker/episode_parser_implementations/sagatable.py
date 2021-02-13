@@ -31,10 +31,10 @@ class SagatableEpisodeParser(EpisodeParser):
         # Remove header with "Nr. | <Name of arc> | Seiten | Release"
         sagatable_items = sagatable_items[1:]
         
-        for sagatable_item in sagatable_items:
+        for idx, sagatable_item in enumerate(sagatable_items):
             episode_number = sagatable_item.xpath(f'{XPATH_EPISODE_NUMBER}')[0]
             episode_title = sagatable_item.xpath(f'{XPATH_EPISODE_TITLE}')[0]
-            episode_onclick = sagatable_item.xpath('//td[@onclick]')[0].attrib["onclick"]
+            episode_onclick = sagatable_item.xpath('//td[@onclick]')[idx].attrib["onclick"]
             episode_path = re.match(r"window.location.href = '(.*)'", episode_onclick).group(1)
             episode_domain = re.match(r"(.*\/\/.*)\/", url).group(1)
             episode_url = episode_domain + episode_path
