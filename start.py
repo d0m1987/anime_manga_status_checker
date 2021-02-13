@@ -48,7 +48,7 @@ def send_update_to_user():
     logger.info("Successfully sent updates to user")
 
 scheduler = SafeScheduler(minutes_after_failure=15)
-scheduler.every(1).hours.do(update_episodes)
+scheduler.every().day.at("02:00").do(update_episodes)
 scheduler.every().day.at("08:00").do(send_update_to_user)
 
 if __name__ == "__main__":
@@ -57,4 +57,4 @@ if __name__ == "__main__":
             scheduler.run_pending()
         except Exception as e:
             logger.error(e)
-        time.sleep(600)
+        time.sleep(3600)
