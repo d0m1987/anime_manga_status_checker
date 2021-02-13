@@ -48,7 +48,8 @@ class Homepage:
         self._episodes = episodes
 
         # Log update
-        logging.info(f"Successfully updated homepage {self.url}. Found {len(new_episodes)} new episodes.")
+        if new_episodes:
+            logging.info(f"Successfully updated homepage {self.url}. Found {len(new_episodes)} new episodes.")
 
     def register_for_updates(self, user:"User") -> None:
         self.users_to_notify[user.email] = user

@@ -53,7 +53,6 @@ if __name__ == "__main__":
     while True:
         try:
             schedule.run_pending()
-            logging.info("Ran scheduled functions with schedule.run_pending()")
         except Exception as e:
             logging.error(e)
         time.sleep(60)
