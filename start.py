@@ -1,5 +1,5 @@
 import time
-import schedule
+from safe_schedule import SafeScheduler
 from decouple import config
 from html_update_checker.user import User
 from html_update_checker.homepage import Homepage
@@ -11,7 +11,8 @@ from html_update_checker.episode_parser_implementations.readdragonballsuper impo
 #   Logging #
 #############
 import logging
-logging.basicConfig(level=logging.INFO, filename='logging.log')
+logging.basicConfig(level=logging.DEBUG, filename='logging.log')
+logger = logging.getLogger(__name__)
 
 #################################
 #   Create users to be notified #
@@ -44,15 +45,16 @@ def update_episodes():
 
 def send_update_to_user():
     user.send_updates()
-    logging.info("Successfully sent updates to user")
+    logger.info("Successfully sent updates to user")
 
-schedule.every(1).hours.do(update_episodes)
-schedule.every().day.at("08:00").do(send_update_to_user)
+scheduler = SafeScheduler(minutes_after_failure=15)
+scheduler.every(1).hours.do(update_episodes)
+scheduler.every().day.at("08:00").do(send_update_to_user)
 
 if __name__ == "__main__":
     while True:
         try:
-            schedule.run_pending()
+            scheduler.run_pending()
         except Exception as e:
-            logging.error(e)
-        time.sleep(60)
+            logger.error(e)
+        time.sleep(600)

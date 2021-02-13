@@ -1,6 +1,8 @@
 from abc import abstractmethod
 import logging
 from typing import List
+
+logger = logging.getLogger(__name__)
 class Homepage:
     homepages = dict()
 
@@ -49,15 +51,15 @@ class Homepage:
 
         # Log update
         if new_episodes:
-            logging.info(f"Successfully updated homepage {self.url}. Found {len(new_episodes)} new episodes.")
+            logger.info(f"Successfully updated homepage {self.url}. Found {len(new_episodes)} new episodes.")
 
     def register_for_updates(self, user:"User") -> None:
         self.users_to_notify[user.email] = user
-        logging.info(f"[{user.email}] Registered {self.url}")
+        logger.info(f"[{user.email}] Registered {self.url}")
     
     def unregister_for_updates(self, user:"User") -> None:
         del self.users_to_notify[user.email]
-        logging.info(f"[{user.email}] Unregistered {self.url}")
+        logger.info(f"[{user.email}] Unregistered {self.url}")
 
 
 class HomepageUpdateInterface:
